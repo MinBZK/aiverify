@@ -4,7 +4,6 @@ import shutil
 from pathlib import Path
 
 import pytest
-
 from test_engine_core.logging.log_manager import LogManager
 
 

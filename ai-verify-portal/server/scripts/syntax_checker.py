@@ -1,10 +1,11 @@
-import ast, sys
+import ast
+import sys
 
 
 def check_syntax() -> None:
     """
     A method to check the syntax of the input python files
-    *Note - while this function does not return any value, the script will exit with different codes depending on the outcome: 
+    *Note - while this function does not return any value, the script will exit with different codes depending on the outcome:
         sys code 0 if the syntax for ALL python file(s) are valid,
         sys code -1 if at least one of the python file(s) is not valid
     """

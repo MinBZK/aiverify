@@ -2,7 +2,6 @@ import subprocess
 
 import pytest
 import redis.client
-
 from test_engine_core.network.redis.redis_pubsub import RedisPubSub
 
 

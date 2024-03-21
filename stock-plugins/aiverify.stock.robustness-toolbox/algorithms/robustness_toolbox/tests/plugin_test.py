@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 from typing import Dict, Tuple, Union
 
+from robustness_toolbox import Plugin
 from test_engine_core.interfaces.idata import IData
 from test_engine_core.interfaces.imodel import IModel
 from test_engine_core.interfaces.ipipeline import IPipeline
@@ -18,7 +19,6 @@ from test_engine_core.utils.json_utils import (
     validate_json,
 )
 from test_engine_core.utils.time import time_class_method
-from robustness_toolbox import Plugin
 
 
 # =====================================================================================
@@ -139,7 +139,9 @@ class PluginTest:
                 current_dataset = self._data_instance.get_data()
                 current_pipeline = self._model_instance.get_pipeline()
                 data_transformation_stages = current_pipeline[:-1]
-                transformed_dataset = data_transformation_stages.transform(current_dataset)
+                transformed_dataset = data_transformation_stages.transform(
+                    current_dataset
+                )
                 transformed_pipeline = current_pipeline[-1]
                 # Set new transformed pipeline and dataset
                 self._data_instance.set_data(transformed_dataset)
@@ -244,7 +246,6 @@ class PluginTest:
                     **self._input_arguments,
                 )
 
-        
                 # Generate the results using this plugin
                 print("Generating the results with the plugin...")
                 plugin.generate()

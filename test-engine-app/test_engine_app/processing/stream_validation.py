@@ -1,11 +1,10 @@
 from pathlib import Path
 from typing import Dict, Tuple, Union
 
+from test_engine_app.processing.algorithm_info import AlgorithmInfo
 from test_engine_core.plugins.enums.model_mode_type import ModelModeType
 from test_engine_core.utils.json_utils import validate_json
 from test_engine_core.utils.validate_checks import is_empty_string, is_file, is_folder
-
-from test_engine_app.processing.algorithm_info import AlgorithmInfo
 
 
 class StreamValidation:

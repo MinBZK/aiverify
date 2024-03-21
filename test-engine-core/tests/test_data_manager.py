@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Any, Dict, Tuple
 
 import pytest
-
 from test_engine_core.interfaces.idata import IData
 from test_engine_core.plugins.data_manager import DataManager
 from test_engine_core.plugins.enums.data_plugin_type import DataPluginType

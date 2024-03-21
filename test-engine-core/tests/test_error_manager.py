@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-
 from test_engine_core.logging.enums.error_category_type import ErrorCategory
 from test_engine_core.logging.enums.error_severity_type import ErrorSeverity
 from test_engine_core.logging.error import Error

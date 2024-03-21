@@ -1,6 +1,5 @@
 import pytest
 import redis
-
 from test_engine_core.network.redis.redis_base import RedisBase
 
 

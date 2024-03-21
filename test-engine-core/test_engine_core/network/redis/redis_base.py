@@ -1,7 +1,6 @@
 from typing import Tuple, Union
 
 import redis
-
 from test_engine_core.utils.validate_checks import is_empty_string
 
 

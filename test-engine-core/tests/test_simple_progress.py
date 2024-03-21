@@ -1,5 +1,4 @@
 import pytest
-
 from test_engine_core.utils.simple_progress import SimpleProgress
 
 

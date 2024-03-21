@@ -6,7 +6,6 @@ from typing import Union
 import pathos
 from aiohttp import web
 from aiohttp.web_response import Response
-
 from test_engine_app.api.requirements_checks import RequirementsChecks
 from test_engine_app.app_logger import AppLogger
 from test_engine_app.config.environment_variables import EnvironmentVariables

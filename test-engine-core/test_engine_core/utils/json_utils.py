@@ -5,7 +5,6 @@ import jsonschema
 import numpy
 import numpy as np
 from jsonschema.validators import validate
-
 from test_engine_core.utils.validate_checks import is_empty_string
 
 

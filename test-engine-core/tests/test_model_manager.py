@@ -1,7 +1,6 @@
 import logging
 
 import pytest
-
 from test_engine_core.plugins.enums.model_plugin_type import ModelPluginType
 from test_engine_core.plugins.enums.plugin_type import PluginType
 from test_engine_core.plugins.model_manager import ModelManager

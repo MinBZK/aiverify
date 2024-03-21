@@ -1,7 +1,6 @@
 import logging
 
 import pytest
-
 from test_engine_core.plugins.algorithm_manager import AlgorithmManager
 from test_engine_core.plugins.enums.plugin_type import PluginType
 

@@ -1,63 +1,66 @@
 import pytest
+from src.delimiterdata.delimiterdata import Plugin
 from test_engine_core.plugins.enums.data_plugin_type import DataPluginType
 from test_engine_core.plugins.enums.delimiter_type import DelimiterType
 from test_engine_core.plugins.enums.plugin_type import PluginType
 from test_engine_core.plugins.metadata.delimiter_metadata import DelimiterMetadata
 
-from src.delimiterdata.delimiterdata import Plugin
-
 
 class TestCollectionDelimiterData:
-    pytest.data = DelimiterMetadata("myPytestData", (DelimiterType.COLON, ":"), "/home/ubuntu/csv_file.csv")
+    pytest.data = DelimiterMetadata(
+        "myPytestData", (DelimiterType.COLON, ":"), "/home/ubuntu/csv_file.csv"
+    )
 
     @pytest.mark.parametrize(
         "data, expected_name, expected_description, expected_version",
         [
             (
-                    pytest.data,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
+                pytest.data,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
             ),
             (
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
             ),
             (
-                    "None",
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
+                "None",
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
             ),
             (
-                    "",
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
+                "",
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
             ),
             (
-                    [],
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
+                [],
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
             ),
             (
-                    {},
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
+                {},
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
             ),
             (
-                    "1234",
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
+                "1234",
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
             ),
         ],
     )
-    def test_get_metadata(self, data, expected_name, expected_description, expected_version):
+    def test_get_metadata(
+        self, data, expected_name, expected_description, expected_version
+    ):
         new_plugin = Plugin(data)
 
         metadata = new_plugin.get_metadata()
@@ -69,32 +72,32 @@ class TestCollectionDelimiterData:
         "data, expected_output",
         [
             (
-                    pytest.data,
-                    PluginType.DATA,
+                pytest.data,
+                PluginType.DATA,
             ),
             (
-                    None,
-                    PluginType.DATA,
+                None,
+                PluginType.DATA,
             ),
             (
-                    "None",
-                    PluginType.DATA,
+                "None",
+                PluginType.DATA,
             ),
             (
-                    "",
-                    PluginType.DATA,
+                "",
+                PluginType.DATA,
             ),
             (
-                    [],
-                    PluginType.DATA,
+                [],
+                PluginType.DATA,
             ),
             (
-                    {},
-                    PluginType.DATA,
+                {},
+                PluginType.DATA,
             ),
             (
-                    "1234",
-                    PluginType.DATA,
+                "1234",
+                PluginType.DATA,
             ),
         ],
     )
@@ -106,32 +109,32 @@ class TestCollectionDelimiterData:
         "data, expected_output",
         [
             (
-                    pytest.data,
-                    DataPluginType.DELIMITER,
+                pytest.data,
+                DataPluginType.DELIMITER,
             ),
             (
-                    None,
-                    DataPluginType.DELIMITER,
+                None,
+                DataPluginType.DELIMITER,
             ),
             (
-                    "None",
-                    DataPluginType.DELIMITER,
+                "None",
+                DataPluginType.DELIMITER,
             ),
             (
-                    "",
-                    DataPluginType.DELIMITER,
+                "",
+                DataPluginType.DELIMITER,
             ),
             (
-                    [],
-                    DataPluginType.DELIMITER,
+                [],
+                DataPluginType.DELIMITER,
             ),
             (
-                    {},
-                    DataPluginType.DELIMITER,
+                {},
+                DataPluginType.DELIMITER,
             ),
             (
-                    "1234",
-                    DataPluginType.DELIMITER,
+                "1234",
+                DataPluginType.DELIMITER,
             ),
         ],
     )
@@ -144,79 +147,79 @@ class TestCollectionDelimiterData:
         "expected_version, expected_plugin_type, expected_data_plugin_type",
         [
             (
-                    pytest.data,
-                    pytest.data,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                pytest.data,
+                pytest.data,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    None,
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                None,
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    "None",
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                "None",
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    "",
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                "",
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    [],
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                [],
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    {},
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                {},
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    "1234",
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                "1234",
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
         ],
     )
     def test_init(
-            self,
-            data,
-            expected_data,
-            expected_name,
-            expected_description,
-            expected_version,
-            expected_plugin_type,
-            expected_data_plugin_type,
+        self,
+        data,
+        expected_data,
+        expected_name,
+        expected_description,
+        expected_version,
+        expected_plugin_type,
+        expected_data_plugin_type,
     ):
         new_plugin = Plugin(data)
         assert new_plugin._data == expected_data
@@ -234,72 +237,80 @@ class TestCollectionDelimiterData:
         "expected_version, expected_plugin_type, expected_data_plugin_type",
         [
             (
-                    pytest.data,
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                pytest.data,
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    None,
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                None,
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    "None",
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                "None",
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    "",
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                "",
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    [],
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                [],
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    {},
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                {},
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
             (
-                    "1234",
-                    None,
-                    "delimiterdata",
-                    "delimiterdata supports values separated by delimiters",
-                    "0.9.0",
-                    PluginType.DATA,
-                    DataPluginType.DELIMITER,
+                "1234",
+                None,
+                "delimiterdata",
+                "delimiterdata supports values separated by delimiters",
+                "0.9.0",
+                PluginType.DATA,
+                DataPluginType.DELIMITER,
             ),
         ],
     )
-    def test_init_no_initialize(self, data, expected_data, expected_name, expected_description,
-                                expected_version, expected_plugin_type, expected_data_plugin_type):
+    def test_init_no_initialize(
+        self,
+        data,
+        expected_data,
+        expected_name,
+        expected_description,
+        expected_version,
+        expected_plugin_type,
+        expected_data_plugin_type,
+    ):
         assert Plugin._data == expected_data
         assert Plugin._name == expected_name
         assert Plugin._description == expected_description
@@ -313,33 +324,30 @@ class TestCollectionDelimiterData:
     @pytest.mark.parametrize(
         "data, expected_output",
         [
+            (pytest.data, (True, "")),
             (
-                    pytest.data,
-                    (True, "")
+                None,
+                (True, ""),
             ),
             (
-                    None,
-                    (True, ""),
+                "None",
+                (True, ""),
             ),
             (
-                    "None",
-                    (True, ""),
+                "",
+                (True, ""),
             ),
             (
-                    "",
-                    (True, ""),
+                [],
+                (True, ""),
             ),
             (
-                    [],
-                    (True, ""),
+                {},
+                (True, ""),
             ),
             (
-                    {},
-                    (True, ""),
-            ),
-            (
-                    "1234",
-                    (True, ""),
+                "1234",
+                (True, ""),
             ),
         ],
     )
@@ -353,28 +361,28 @@ class TestCollectionDelimiterData:
         "data, expected_output",
         [
             (
-                    pytest.data,
-                    "myPytestData",
+                pytest.data,
+                "myPytestData",
             ),
             (
-                    "None",
-                    None,
+                "None",
+                None,
             ),
             (
-                    "",
-                    None,
+                "",
+                None,
             ),
             (
-                    [],
-                    None,
+                [],
+                None,
             ),
             (
-                    {},
-                    None,
+                {},
+                None,
             ),
             (
-                    "1234",
-                    None,
+                "1234",
+                None,
             ),
         ],
     )
@@ -385,33 +393,30 @@ class TestCollectionDelimiterData:
     @pytest.mark.parametrize(
         "data, expected_output",
         [
+            (pytest.data, DelimiterType.COLON),
             (
-                    pytest.data,
-                    DelimiterType.COLON
+                None,
+                None,
             ),
             (
-                    None,
-                    None,
+                "None",
+                None,
             ),
             (
-                    "None",
-                    None,
+                "",
+                None,
             ),
             (
-                    "",
-                    None,
+                [],
+                None,
             ),
             (
-                    [],
-                    None,
+                {},
+                None,
             ),
             (
-                    {},
-                    None,
-            ),
-            (
-                    "1234",
-                    None,
+                "1234",
+                None,
             ),
         ],
     )
@@ -423,28 +428,28 @@ class TestCollectionDelimiterData:
         "data, expected_output",
         [
             (
-                    pytest.data,
-                    pytest.data,
+                pytest.data,
+                pytest.data,
             ),
             (
-                    "None",
-                    None,
+                "None",
+                None,
             ),
             (
-                    "",
-                    None,
+                "",
+                None,
             ),
             (
-                    [],
-                    None,
+                [],
+                None,
             ),
             (
-                    {},
-                    None,
+                {},
+                None,
             ),
             (
-                    "1234",
-                    None,
+                "1234",
+                None,
             ),
         ],
     )
@@ -457,28 +462,28 @@ class TestCollectionDelimiterData:
         "data, expected_output",
         [
             (
-                    pytest.data,
-                    True,
+                pytest.data,
+                True,
             ),
             (
-                    "None",
-                    False,
+                "None",
+                False,
             ),
             (
-                    "",
-                    False,
+                "",
+                False,
             ),
             (
-                    [],
-                    False,
+                [],
+                False,
             ),
             (
-                    {},
-                    False,
+                {},
+                False,
             ),
             (
-                    "1234",
-                    False,
+                "1234",
+                False,
             ),
         ],
     )
@@ -490,34 +495,34 @@ class TestCollectionDelimiterData:
         "data, ground_truth, expected_output",
         [
             (
-                    pytest.data,
-                    "ground_truth",
-                    None,
+                pytest.data,
+                "ground_truth",
+                None,
             ),
             (
-                    "None",
-                    "ground_truth",
-                    None,
+                "None",
+                "ground_truth",
+                None,
             ),
             (
-                    "",
-                    "ground_truth",
-                    None,
+                "",
+                "ground_truth",
+                None,
             ),
             (
-                    [],
-                    "ground_truth",
-                    None,
+                [],
+                "ground_truth",
+                None,
             ),
             (
-                    {},
-                    "ground_truth",
-                    None,
+                {},
+                "ground_truth",
+                None,
             ),
             (
-                    "1234",
-                    "ground_truth",
-                    None,
+                "1234",
+                "ground_truth",
+                None,
             ),
         ],
     )
@@ -529,28 +534,28 @@ class TestCollectionDelimiterData:
         "data, expected_output",
         [
             (
-                    pytest.data,
-                    None,
+                pytest.data,
+                None,
             ),
             (
-                    "None",
-                    None,
+                "None",
+                None,
             ),
             (
-                    "",
-                    None,
+                "",
+                None,
             ),
             (
-                    [],
-                    None,
+                [],
+                None,
             ),
             (
-                    {},
-                    None,
+                {},
+                None,
             ),
             (
-                    1234,
-                    None,
+                1234,
+                None,
             ),
         ],
     )
@@ -562,34 +567,34 @@ class TestCollectionDelimiterData:
         "data, ground_truth, expected_output",
         [
             (
-                    pytest.data,
-                    "ground_truth",
-                    None,
+                pytest.data,
+                "ground_truth",
+                None,
             ),
             (
-                    "None",
-                    "ground_truth",
-                    None,
+                "None",
+                "ground_truth",
+                None,
             ),
             (
-                    "",
-                    "ground_truth",
-                    None,
+                "",
+                "ground_truth",
+                None,
             ),
             (
-                    [],
-                    "ground_truth",
-                    None,
+                [],
+                "ground_truth",
+                None,
             ),
             (
-                    {},
-                    "ground_truth",
-                    None,
+                {},
+                "ground_truth",
+                None,
             ),
             (
-                    1234,
-                    "ground_truth",
-                    None,
+                1234,
+                "ground_truth",
+                None,
             ),
         ],
     )
@@ -601,28 +606,28 @@ class TestCollectionDelimiterData:
         "data, expected_output",
         [
             (
-                    pytest.data,
-                    None,
+                pytest.data,
+                None,
             ),
             (
-                    "None",
-                    None,
+                "None",
+                None,
             ),
             (
-                    "",
-                    None,
+                "",
+                None,
             ),
             (
-                    [],
-                    None,
+                [],
+                None,
             ),
             (
-                    {},
-                    None,
+                {},
+                None,
             ),
             (
-                    1234,
-                    None,
+                1234,
+                None,
             ),
         ],
     )
@@ -634,28 +639,28 @@ class TestCollectionDelimiterData:
         "data, expected_output",
         [
             (
-                    pytest.data,
-                    None,
+                pytest.data,
+                None,
             ),
             (
-                    "None",
-                    None,
+                "None",
+                None,
             ),
             (
-                    "",
-                    None,
+                "",
+                None,
             ),
             (
-                    [],
-                    None,
+                [],
+                None,
             ),
             (
-                    {},
-                    None,
+                {},
+                None,
             ),
             (
-                    1234,
-                    None,
+                1234,
+                None,
             ),
         ],
     )
@@ -667,28 +672,28 @@ class TestCollectionDelimiterData:
         "data, expected_output",
         [
             (
-                    pytest.data,
-                    {"data_path": "/home/ubuntu/csv_file.csv", "delimiter_type": ":"},
+                pytest.data,
+                {"data_path": "/home/ubuntu/csv_file.csv", "delimiter_type": ":"},
             ),
             (
-                    "None",
-                    {},
+                "None",
+                {},
             ),
             (
-                    "",
-                    {},
+                "",
+                {},
             ),
             (
-                    [],
-                    {},
+                [],
+                {},
             ),
             (
-                    {},
-                    {},
+                {},
+                {},
             ),
             (
-                    1234,
-                    {},
+                1234,
+                {},
             ),
         ],
     )

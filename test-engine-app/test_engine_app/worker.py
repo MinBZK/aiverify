@@ -5,8 +5,6 @@ from multiprocessing import Lock
 from time import sleep
 from typing import Dict, List, Tuple, Union
 
-from test_engine_core.utils.validate_checks import is_empty_string
-
 from test_engine_app.app_logger import AppLogger
 from test_engine_app.config.environment_variables import EnvironmentVariables
 from test_engine_app.enums.service_type import ServiceType
@@ -21,6 +19,7 @@ from test_engine_app.network.redis_constants import (
 from test_engine_app.processing.plugin_controller import PluginController
 from test_engine_app.processing.service import Service
 from test_engine_app.processing.task import Task
+from test_engine_core.utils.validate_checks import is_empty_string
 
 
 class Worker:

@@ -1,5 +1,4 @@
 import pytest
-
 from test_engine_app.app_logger import AppLogger
 from test_engine_app.enums.service_response import ServiceResponse
 from test_engine_app.enums.service_status import ServiceStatus
@@ -20,9 +19,7 @@ class TestCollectionServiceResult:
 
     @pytest.mark.parametrize(
         "logger",
-        [
-            pytest.logger
-        ],
+        [pytest.logger],
     )
     def test_init(self, logger):
         new_service_result = ServiceResult(logger)
@@ -42,31 +39,13 @@ class TestCollectionServiceResult:
     @pytest.mark.parametrize(
         "logger, expected_output",
         [
-            (
-                    None,
-                    "The inputs do not meet the validation rules"
-            ),
-            (
-                    "None",
-                    "The inputs do not meet the validation rules"
-            ),
-            (
-                    "",
-                    "The inputs do not meet the validation rules"
-            ),
-            (
-                    [],
-                    "The inputs do not meet the validation rules"
-            ),
-            (
-                    {},
-                    "The inputs do not meet the validation rules"
-            ),
-            (
-                    1234,
-                    "The inputs do not meet the validation rules"
-            ),
-        ]
+            (None, "The inputs do not meet the validation rules"),
+            ("None", "The inputs do not meet the validation rules"),
+            ("", "The inputs do not meet the validation rules"),
+            ([], "The inputs do not meet the validation rules"),
+            ({}, "The inputs do not meet the validation rules"),
+            (1234, "The inputs do not meet the validation rules"),
+        ],
     )
     def test_init_with_exception(self, logger, expected_output):
         with pytest.raises(RuntimeError) as exc_info:
@@ -90,34 +69,25 @@ class TestCollectionServiceResult:
         "results, validation_type, expected_results_list",
         [
             (
-                    {
-                        "schema": "myschema",
-                        "rows": 2,
-                        "cols": 10,
-                        "serializer_type": "mySerializerType",
-                        "data_format": "myDataFormat"
-                    },
-                    ServiceValidationType.VALIDATE_DATASET,
-                    [
-                        "myschema",
-                        2,
-                        10,
-                        "mySerializerType",
-                        "myDataFormat"
-                    ]
+                {
+                    "schema": "myschema",
+                    "rows": 2,
+                    "cols": 10,
+                    "serializer_type": "mySerializerType",
+                    "data_format": "myDataFormat",
+                },
+                ServiceValidationType.VALIDATE_DATASET,
+                ["myschema", 2, 10, "mySerializerType", "myDataFormat"],
             ),
             (
-                    {
-                        "model_format": "mymodelformat",
-                        "serializer_type": "mySerializerType"
-                    },
-                    ServiceValidationType.VALIDATE_MODEL,
-                    [
-                        "mymodelformat",
-                        "mySerializerType"
-                    ]
-            )
-        ]
+                {
+                    "model_format": "mymodelformat",
+                    "serializer_type": "mySerializerType",
+                },
+                ServiceValidationType.VALIDATE_MODEL,
+                ["mymodelformat", "mySerializerType"],
+            ),
+        ],
     )
     def test_set_results(self, results, validation_type, expected_results_list):
         new_service_result = ServiceResult(pytest.logger)
@@ -136,32 +106,34 @@ class TestCollectionServiceResult:
         "results, validation_type, expected_output",
         [
             (
-                    None,
-                    ServiceValidationType.VALIDATE_DATASET,
-                    "The current service received an invalid input: None (<class 'NoneType'>), "
-                    "ServiceValidationType.VALIDATE_DATASET (<enum 'ServiceValidationType'>)"
+                None,
+                ServiceValidationType.VALIDATE_DATASET,
+                "The current service received an invalid input: None (<class 'NoneType'>), "
+                "ServiceValidationType.VALIDATE_DATASET (<enum 'ServiceValidationType'>)",
             ),
             (
-                    "None",
-                    ServiceValidationType.VALIDATE_DATASET,
-                    "The current service received an invalid input: None (<class 'str'>), "
-                    "ServiceValidationType.VALIDATE_DATASET (<enum 'ServiceValidationType'>)"
+                "None",
+                ServiceValidationType.VALIDATE_DATASET,
+                "The current service received an invalid input: None (<class 'str'>), "
+                "ServiceValidationType.VALIDATE_DATASET (<enum 'ServiceValidationType'>)",
             ),
             (
-                    [],
-                    ServiceValidationType.VALIDATE_DATASET,
-                    "The current service received an invalid input: [] (<class 'list'>), "
-                    "ServiceValidationType.VALIDATE_DATASET (<enum 'ServiceValidationType'>)"
+                [],
+                ServiceValidationType.VALIDATE_DATASET,
+                "The current service received an invalid input: [] (<class 'list'>), "
+                "ServiceValidationType.VALIDATE_DATASET (<enum 'ServiceValidationType'>)",
             ),
             (
-                    1234,
-                    ServiceValidationType.VALIDATE_DATASET,
-                    "The current service received an invalid input: 1234 (<class 'int'>), "
-                    "ServiceValidationType.VALIDATE_DATASET (<enum 'ServiceValidationType'>)"
+                1234,
+                ServiceValidationType.VALIDATE_DATASET,
+                "The current service received an invalid input: 1234 (<class 'int'>), "
+                "ServiceValidationType.VALIDATE_DATASET (<enum 'ServiceValidationType'>)",
             ),
-        ]
+        ],
     )
-    def test_set_results_invalid_inputs(self, results, validation_type, expected_output):
+    def test_set_results_invalid_inputs(
+        self, results, validation_type, expected_output
+    ):
         with pytest.raises(RuntimeError) as exc_info:
             new_service_result = ServiceResult(pytest.logger)
             new_service_result.set_results(results, validation_type)
@@ -188,12 +160,21 @@ class TestCollectionServiceResult:
         assert new_service_result.result is ServiceResponse.NONE
         assert new_service_result.status is ServiceStatus.INIT
 
-        AppLogger.add_error_to_log(pytest.logger, "SYS", "FSYS1234", "Description", "Critical", "service_result.py")
+        AppLogger.add_error_to_log(
+            pytest.logger,
+            "SYS",
+            "FSYS1234",
+            "Description",
+            "Critical",
+            "service_result.py",
+        )
         new_service_result.set_failure()
 
-        assert new_service_result.error_messages == \
-               '[{"category": "SYSTEM_ERROR", "code": "FSYS1234", "description": "Description", ' \
-               '"severity": "critical", "component": "service_result.py"}]'
+        assert (
+            new_service_result.error_messages
+            == '[{"category": "SYSTEM_ERROR", "code": "FSYS1234", "description": "Description", '
+            '"severity": "critical", "component": "service_result.py"}]'
+        )
         assert new_service_result.result is ServiceResponse.NONE
         assert new_service_result.status is ServiceStatus.ERROR
 
@@ -205,34 +186,31 @@ class TestCollectionServiceResult:
         assert new_service_result.status is ServiceStatus.INIT
 
         # Add an error
-        AppLogger.add_error_to_log(pytest.logger, "SYS", "FSYS1234", "Description", "Critical", "service_result.py")
+        AppLogger.add_error_to_log(
+            pytest.logger,
+            "SYS",
+            "FSYS1234",
+            "Description",
+            "Critical",
+            "service_result.py",
+        )
         new_service_result.set_invalid()
 
-        assert new_service_result.error_messages == \
-               '[{"category": "SYSTEM_ERROR", "code": "FSYS1234", "description": "Description", ' \
-               '"severity": "critical", "component": "service_result.py"}]'
+        assert (
+            new_service_result.error_messages
+            == '[{"category": "SYSTEM_ERROR", "code": "FSYS1234", "description": "Description", '
+            '"severity": "critical", "component": "service_result.py"}]'
+        )
         assert new_service_result.result is ServiceResponse.INVALID
         assert new_service_result.status is ServiceStatus.DONE
 
     @pytest.mark.parametrize(
         "service_status, expected_service_status",
         [
-            (
-                    ServiceStatus.INIT,
-                    ServiceStatus.INIT
-            ),
-            (
-                    ServiceStatus.DONE,
-                    ServiceStatus.DONE
-            ),
-            (
-                    ServiceStatus.ERROR,
-                    ServiceStatus.ERROR
-            ),
-            (
-                    ServiceStatus.RUNNING,
-                    ServiceStatus.RUNNING
-            ),
+            (ServiceStatus.INIT, ServiceStatus.INIT),
+            (ServiceStatus.DONE, ServiceStatus.DONE),
+            (ServiceStatus.ERROR, ServiceStatus.ERROR),
+            (ServiceStatus.RUNNING, ServiceStatus.RUNNING),
         ],
     )
     def test_set_status(self, service_status, expected_service_status):
@@ -246,38 +224,40 @@ class TestCollectionServiceResult:
         "service_status, expected_service_status, expected_error_message",
         [
             (
-                    None,
-                    ServiceStatus.INIT,
-                    "The current service received an invalid input: None (<class 'NoneType'>)"
+                None,
+                ServiceStatus.INIT,
+                "The current service received an invalid input: None (<class 'NoneType'>)",
             ),
             (
-                    "None",
-                    ServiceStatus.INIT,
-                    "The current service received an invalid input: None (<class 'str'>)"
+                "None",
+                ServiceStatus.INIT,
+                "The current service received an invalid input: None (<class 'str'>)",
             ),
             (
-                    [],
-                    ServiceStatus.INIT,
-                    "The current service received an invalid input: [] (<class 'list'>)"
+                [],
+                ServiceStatus.INIT,
+                "The current service received an invalid input: [] (<class 'list'>)",
             ),
             (
-                    {},
-                    ServiceStatus.INIT,
-                    "The current service received an invalid input: {} (<class 'dict'>)"
+                {},
+                ServiceStatus.INIT,
+                "The current service received an invalid input: {} (<class 'dict'>)",
             ),
             (
-                    "",
-                    ServiceStatus.INIT,
-                    "The current service received an invalid input:  (<class 'str'>)"
+                "",
+                ServiceStatus.INIT,
+                "The current service received an invalid input:  (<class 'str'>)",
             ),
             (
-                    1234,
-                    ServiceStatus.INIT,
-                    "The current service received an invalid input: 1234 (<class 'int'>)"
+                1234,
+                ServiceStatus.INIT,
+                "The current service received an invalid input: 1234 (<class 'int'>)",
             ),
         ],
     )
-    def test_set_status_with_exception(self, service_status, expected_service_status, expected_error_message):
+    def test_set_status_with_exception(
+        self, service_status, expected_service_status, expected_error_message
+    ):
         with pytest.raises(RuntimeError) as exc_info:
             new_service_result = ServiceResult(pytest.logger)
 

@@ -1,10 +1,9 @@
 import pytest
+from src.delimiterserializer.delimiterserializer import Plugin
 from test_engine_core.plugins.enums.delimiter_type import DelimiterType
 from test_engine_core.plugins.enums.plugin_type import PluginType
 from test_engine_core.plugins.enums.serializer_plugin_type import SerializerPluginType
 from test_engine_core.plugins.metadata.delimiter_metadata import DelimiterMetadata
-
-from src.delimiterserializer.delimiterserializer import Plugin
 
 
 class TestCollectionDelimiterSerializer:
@@ -12,9 +11,9 @@ class TestCollectionDelimiterSerializer:
         "expected_name, expected_description, expected_version",
         [
             (
-                    "delimiterserializer",
-                    "delimiterserializer supports reading data with separated values",
-                    "0.9.0",
+                "delimiterserializer",
+                "delimiterserializer supports reading data with separated values",
+                "0.9.0",
             ),
         ],
     )
@@ -27,9 +26,7 @@ class TestCollectionDelimiterSerializer:
     @pytest.mark.parametrize(
         "expected_output",
         [
-            (
-                    PluginType.SERIALIZER
-            ),
+            (PluginType.SERIALIZER),
         ],
     )
     def test_get_plugin_type(self, expected_output):
@@ -39,11 +36,17 @@ class TestCollectionDelimiterSerializer:
         "data_path, expected_output",
         [
             (
+                "src/delimiterdata/user_defined_files/sv_colon.txt",
+                DelimiterMetadata(
+                    [
+                        ["Name", "Age", "Gender"],
+                        ["Alex", "30", "M"],
+                        ["Belle", "29", "F"],
+                        ["Chansey", "50", "F"],
+                    ],
+                    (DelimiterType.COLON, ":"),
                     "src/delimiterdata/user_defined_files/sv_colon.txt",
-                    DelimiterMetadata([['Name', 'Age', 'Gender'], ['Alex', '30', 'M'],
-                                       ['Belle', '29', 'F'], ['Chansey', '50', 'F']],
-                                      (DelimiterType.COLON, ":"),
-                                      "src/delimiterdata/user_defined_files/sv_colon.txt")
+                ),
             )
         ],
     )
@@ -60,34 +63,16 @@ class TestCollectionDelimiterSerializer:
     @pytest.mark.parametrize(
         "data_path, expected_error_message",
         [
+            ("1234.csv", "[Errno 2] No such file or directory: '1234.csv'"),
             (
-                    "1234.csv",
-                    "[Errno 2] No such file or directory: '1234.csv'"
+                "tests/delimiterserializer/special_delimiter.txt",
+                "The delimiter is not supported.",
             ),
-            (
-                    "tests/delimiterserializer/special_delimiter.txt",
-                    "The delimiter is not supported."
-            ),
-            (
-                    None,
-                    "expected str, bytes or os.PathLike object, not NoneType"
-            ),
-            (
-                    "None",
-                    "[Errno 2] No such file or directory: 'None'"
-            ),
-            (
-                    {},
-                    "expected str, bytes or os.PathLike object, not dict"
-            ),
-            (
-                    [],
-                    "expected str, bytes or os.PathLike object, not list"
-            ),
-            (
-                    1234,
-                    "[Errno 9] Bad file descriptor"
-            ),
+            (None, "expected str, bytes or os.PathLike object, not NoneType"),
+            ("None", "[Errno 2] No such file or directory: 'None'"),
+            ({}, "expected str, bytes or os.PathLike object, not dict"),
+            ([], "expected str, bytes or os.PathLike object, not list"),
+            (1234, "[Errno 9] Bad file descriptor"),
         ],
     )
     def test_deserialize_data_with_exception(self, data_path, expected_error_message):
@@ -98,9 +83,7 @@ class TestCollectionDelimiterSerializer:
     @pytest.mark.parametrize(
         "expected_output",
         [
-            (
-                    SerializerPluginType.DELIMITER
-            ),
+            (SerializerPluginType.DELIMITER),
         ],
     )
     def test_get_serializer_plugin_type(self, expected_output):

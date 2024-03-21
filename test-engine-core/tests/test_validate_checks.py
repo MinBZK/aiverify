@@ -1,7 +1,6 @@
 import subprocess
 
 import pytest
-
 from test_engine_core.utils.validate_checks import is_empty_string, is_file, is_folder
 
 

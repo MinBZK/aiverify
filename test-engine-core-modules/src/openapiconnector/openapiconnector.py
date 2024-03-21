@@ -284,8 +284,9 @@ class Plugin(IModel):
         try:
             return asyncio.run(self.make_request(data, *args))
         except:
-            raise RuntimeError("Unable to send request to API Server. Please ensure that the URL is correct.")
-
+            raise RuntimeError(
+                "Unable to send request to API Server. Please ensure that the URL is correct."
+            )
 
     def predict_proba(self, data: Any, *args) -> Any:
         """
@@ -301,7 +302,9 @@ class Plugin(IModel):
         try:
             return asyncio.run(self.make_request(data, *args))
         except:
-            raise RuntimeError("Unable to send request to API Server. Please ensure that the URL is correct.")
+            raise RuntimeError(
+                "Unable to send request to API Server. Please ensure that the URL is correct."
+            )
 
     def score(self, data: Any, y_true: Any) -> Any:
         """
@@ -519,7 +522,7 @@ class Plugin(IModel):
             # Populate body with payload values
             headers, data, result = await self._api_instance._.predict_api.request(
                 parameters=headers, data=list_of_processed_rows
-                )
+            )
         else:
             # GET method. Populate body with payload values
             body = None

@@ -2,7 +2,6 @@ import subprocess
 
 import numpy as np
 import pytest
-
 from test_engine_core.utils.json_utils import (
     load_schema_file,
     remove_numpy_formats,

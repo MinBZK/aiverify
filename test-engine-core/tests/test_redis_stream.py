@@ -1,7 +1,6 @@
 import subprocess
 
 import pytest
-
 from test_engine_core.network.redis.redis_stream import RedisStream
 
 

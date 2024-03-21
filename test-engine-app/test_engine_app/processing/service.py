@@ -1,8 +1,6 @@
 import logging
 from typing import Callable, Dict, Tuple, Union
 
-from test_engine_core.utils.validate_checks import is_empty_string
-
 from test_engine_app.app_logger import AppLogger
 from test_engine_app.enums.service_type import ServiceType
 from test_engine_app.enums.service_validation_type import ServiceValidationType
@@ -12,6 +10,7 @@ from test_engine_app.processing.service_argument import ServiceArgument
 from test_engine_app.processing.service_processing import ServiceProcessing
 from test_engine_app.processing.service_result import ServiceResult
 from test_engine_app.processing.stream_formatter import StreamFormatter
+from test_engine_core.utils.validate_checks import is_empty_string
 
 
 class Service(IWorkerFunction):

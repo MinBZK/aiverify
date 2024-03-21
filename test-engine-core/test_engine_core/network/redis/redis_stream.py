@@ -1,7 +1,6 @@
 from typing import Dict, Tuple, Union
 
 import redis
-
 from test_engine_core.network.redis.redis_base import RedisBase
 from test_engine_core.utils.validate_checks import is_empty_string
 

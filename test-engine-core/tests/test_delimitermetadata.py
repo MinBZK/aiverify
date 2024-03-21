@@ -1,5 +1,4 @@
 import pytest
-
 from test_engine_core.plugins.enums.delimiter_type import DelimiterType
 from test_engine_core.plugins.metadata.delimiter_metadata import DelimiterMetadata
 

@@ -1,6 +1,8 @@
 import logging
 from typing import Callable, Dict, Tuple, Union
 
+from test_engine_app.app_logger import AppLogger
+from test_engine_app.processing.plugin_controller import PluginController
 from test_engine_core.interfaces.ialgorithm import IAlgorithm
 from test_engine_core.interfaces.idata import IData
 from test_engine_core.interfaces.imodel import IModel
@@ -9,9 +11,6 @@ from test_engine_core.interfaces.iserializer import ISerializer
 from test_engine_core.plugins.enums.model_mode_type import ModelModeType
 from test_engine_core.plugins.enums.model_type import ModelType
 from test_engine_core.plugins.enums.plugin_type import PluginType
-
-from test_engine_app.app_logger import AppLogger
-from test_engine_app.processing.plugin_controller import PluginController
 
 
 class StreamProcessing:

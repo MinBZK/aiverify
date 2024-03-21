@@ -1,66 +1,71 @@
 import numpy as np
 import pytest
+from src.lightgbmmodel.lightgbmmodel import Plugin
 from test_engine_core.plugins.enums.model_plugin_type import ModelPluginType
 from test_engine_core.plugins.enums.plugin_type import PluginType
 from test_engine_core.plugins.plugins_manager import PluginManager
-
-from src.lightgbmmodel.lightgbmmodel import Plugin
 
 
 class TestCollectionLightGbmModel:
     PluginManager.discover("src")
     lightgbm_model, _, _ = PluginManager.get_instance(
-        PluginType.MODEL, **{"filename": "src/lightgbmmodel/user_defined_files/joblib_lightgbm_lgbmclassifier.sav"})
+        PluginType.MODEL,
+        **{
+            "filename": "src/lightgbmmodel/user_defined_files/joblib_lightgbm_lgbmclassifier.sav"
+        }
+    )
     pytest.model = lightgbm_model.get_model()
 
     @pytest.mark.parametrize(
         "model, expected_name, expected_description, expected_version",
         [
             (
-                    pytest.model,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
+                pytest.model,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
             ),
             (
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
             ),
             (
-                    "None",
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
+                "None",
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
             ),
             (
-                    "",
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
+                "",
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
             ),
             (
-                    [],
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
+                [],
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
             ),
             (
-                    {},
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
+                {},
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
             ),
             (
-                    1234,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
+                1234,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
             ),
         ],
     )
-    def test_get_metadata(self, model, expected_name, expected_description, expected_version):
+    def test_get_metadata(
+        self, model, expected_name, expected_description, expected_version
+    ):
         new_model = Plugin(model)
         metadata = new_model.get_metadata()
         assert metadata.name == expected_name
@@ -70,33 +75,30 @@ class TestCollectionLightGbmModel:
     @pytest.mark.parametrize(
         "model, expected_output",
         [
+            (pytest.model, PluginType.MODEL),
             (
-                    pytest.model,
-                    PluginType.MODEL
+                None,
+                PluginType.MODEL,
             ),
             (
-                    None,
-                    PluginType.MODEL,
+                "None",
+                PluginType.MODEL,
             ),
             (
-                    "None",
-                    PluginType.MODEL,
+                "",
+                PluginType.MODEL,
             ),
             (
-                    "",
-                    PluginType.MODEL,
+                [],
+                PluginType.MODEL,
             ),
             (
-                    [],
-                    PluginType.MODEL,
+                {},
+                PluginType.MODEL,
             ),
             (
-                    {},
-                    PluginType.MODEL,
-            ),
-            (
-                    "1234",
-                    PluginType.MODEL,
+                "1234",
+                PluginType.MODEL,
             ),
         ],
     )
@@ -107,33 +109,24 @@ class TestCollectionLightGbmModel:
     @pytest.mark.parametrize(
         "model, expected_output",
         [
+            (pytest.model, ModelPluginType.LIGHTGBM),
+            (None, ModelPluginType.LIGHTGBM),
+            ("None", ModelPluginType.LIGHTGBM),
             (
-                    pytest.model,
-                    ModelPluginType.LIGHTGBM
+                "",
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    None,
-                    ModelPluginType.LIGHTGBM
+                [],
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    "None",
-                    ModelPluginType.LIGHTGBM
+                {},
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    "",
-                    ModelPluginType.LIGHTGBM,
-            ),
-            (
-                    [],
-                    ModelPluginType.LIGHTGBM,
-            ),
-            (
-                    {},
-                    ModelPluginType.LIGHTGBM,
-            ),
-            (
-                    "1234",
-                    ModelPluginType.LIGHTGBM,
+                "1234",
+                ModelPluginType.LIGHTGBM,
             ),
         ],
     )
@@ -146,74 +139,80 @@ class TestCollectionLightGbmModel:
         "expected_version, expected_plugin_type, expected_model_plugin_type",
         [
             (
-                    pytest.model,
-                    pytest.model,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                pytest.model,
+                pytest.model,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    None,
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                None,
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    "None",
-                    "None",
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                "None",
+                "None",
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    "",
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                "",
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    [],
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                [],
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    {},
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                {},
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    "1234",
-                    "1234",
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                "1234",
+                "1234",
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
         ],
     )
-    def test_init(self,
-                  model, expected_data, expected_name, expected_description,
-                  expected_version, expected_plugin_type, expected_model_plugin_type
-                  ):
+    def test_init(
+        self,
+        model,
+        expected_data,
+        expected_name,
+        expected_description,
+        expected_version,
+        expected_plugin_type,
+        expected_model_plugin_type,
+    ):
         new_model = Plugin(model)
         assert new_model._model == expected_data
         assert new_model._name == expected_name
@@ -230,74 +229,80 @@ class TestCollectionLightGbmModel:
         "expected_version, expected_plugin_type, expected_model_plugin_type",
         [
             (
-                    pytest.model,
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                pytest.model,
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    None,
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                None,
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    "None",
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                "None",
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    "",
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                "",
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    [],
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                [],
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    {},
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                {},
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
             (
-                    "1234",
-                    None,
-                    "lightgbmmodel",
-                    "lightgbmmodel supports detecting lightgbm models",
-                    "0.9.0",
-                    PluginType.MODEL,
-                    ModelPluginType.LIGHTGBM,
+                "1234",
+                None,
+                "lightgbmmodel",
+                "lightgbmmodel supports detecting lightgbm models",
+                "0.9.0",
+                PluginType.MODEL,
+                ModelPluginType.LIGHTGBM,
             ),
         ],
     )
-    def test_init_no_initialize(self,
-                                model, expected_data, expected_name, expected_description,
-                                expected_version, expected_plugin_type, expected_model_plugin_type
-                                ):
+    def test_init_no_initialize(
+        self,
+        model,
+        expected_data,
+        expected_name,
+        expected_description,
+        expected_version,
+        expected_plugin_type,
+        expected_model_plugin_type,
+    ):
         assert Plugin._model == expected_data
         assert Plugin._name == expected_name
         assert Plugin._description == expected_description
@@ -315,33 +320,30 @@ class TestCollectionLightGbmModel:
     @pytest.mark.parametrize(
         "model, expected_output",
         [
+            (pytest.model, (True, "")),
             (
-                    pytest.model,
-                    (True, "")
+                None,
+                (True, ""),
             ),
             (
-                    None,
-                    (True, ""),
+                "None",
+                (True, ""),
             ),
             (
-                    "None",
-                    (True, ""),
+                "",
+                (True, ""),
             ),
             (
-                    "",
-                    (True, ""),
+                [],
+                (True, ""),
             ),
             (
-                    [],
-                    (True, ""),
+                {},
+                (True, ""),
             ),
             (
-                    {},
-                    (True, ""),
-            ),
-            (
-                    "1234",
-                    (True, ""),
+                "1234",
+                (True, ""),
             ),
         ],
     )
@@ -355,28 +357,28 @@ class TestCollectionLightGbmModel:
         "model, expected_output",
         [
             (
-                    pytest.model,
-                    pytest.model,
+                pytest.model,
+                pytest.model,
             ),
             (
-                    "None",
-                    "None",
+                "None",
+                "None",
             ),
             (
-                    "",
-                    None,
+                "",
+                None,
             ),
             (
-                    [],
-                    None,
+                [],
+                None,
             ),
             (
-                    {},
-                    None,
+                {},
+                None,
             ),
             (
-                    "1234",
-                    "1234",
+                "1234",
+                "1234",
             ),
         ],
     )
@@ -387,33 +389,30 @@ class TestCollectionLightGbmModel:
     @pytest.mark.parametrize(
         "model, expected_output",
         [
+            (pytest.model, "lightgbm.sklearn.LGBMClassifier"),
             (
-                    pytest.model,
-                    "lightgbm.sklearn.LGBMClassifier"
+                None,
+                "",
             ),
             (
-                    None,
-                    "",
+                "None",
+                "",
             ),
             (
-                    "None",
-                    "",
+                "",
+                "",
             ),
             (
-                    "",
-                    "",
+                [],
+                "",
             ),
             (
-                    [],
-                    "",
+                {},
+                "",
             ),
             (
-                    {},
-                    "",
-            ),
-            (
-                    "1234",
-                    "",
+                "1234",
+                "",
             ),
         ],
     )
@@ -426,28 +425,28 @@ class TestCollectionLightGbmModel:
         "model, expected_output",
         [
             (
-                    pytest.model,
-                    True,
+                pytest.model,
+                True,
             ),
             (
-                    "None",
-                    False,
+                "None",
+                False,
             ),
             (
-                    "",
-                    False,
+                "",
+                False,
             ),
             (
-                    [],
-                    False,
+                [],
+                False,
             ),
             (
-                    {},
-                    False,
+                {},
+                False,
             ),
             (
-                    "1234",
-                    False,
+                "1234",
+                False,
             ),
         ],
     )
@@ -459,8 +458,8 @@ class TestCollectionLightGbmModel:
         "model, expected_output",
         [
             (
-                    pytest.model,
-                    np.array([1, 0]),
+                pytest.model,
+                np.array([1, 0]),
             ),
         ],
     )
@@ -474,24 +473,24 @@ class TestCollectionLightGbmModel:
         "model, expected_output",
         [
             (
-                    "None",
-                    "'str' object has no attribute 'predict'",
+                "None",
+                "'str' object has no attribute 'predict'",
             ),
             (
-                    "",
-                    "'NoneType' object has no attribute 'predict'",
+                "",
+                "'NoneType' object has no attribute 'predict'",
             ),
             (
-                    [],
-                    "'NoneType' object has no attribute 'predict'",
+                [],
+                "'NoneType' object has no attribute 'predict'",
             ),
             (
-                    {},
-                    "'NoneType' object has no attribute 'predict'",
+                {},
+                "'NoneType' object has no attribute 'predict'",
             ),
             (
-                    "1234",
-                    "'str' object has no attribute 'predict'",
+                "1234",
+                "'str' object has no attribute 'predict'",
             ),
         ],
     )
@@ -507,8 +506,8 @@ class TestCollectionLightGbmModel:
         "model, expected_output",
         [
             (
-                    pytest.model,
-                    np.array([[0.33675274, 0.66324726], [0.6983471, 0.3016529]])
+                pytest.model,
+                np.array([[0.33675274, 0.66324726], [0.6983471, 0.3016529]]),
             ),
         ],
     )
@@ -522,24 +521,24 @@ class TestCollectionLightGbmModel:
         "model, expected_output",
         [
             (
-                    "None",
-                    "'str' object has no attribute 'predict_proba'",
+                "None",
+                "'str' object has no attribute 'predict_proba'",
             ),
             (
-                    "",
-                    "'NoneType' object has no attribute 'predict_proba'",
+                "",
+                "'NoneType' object has no attribute 'predict_proba'",
             ),
             (
-                    [],
-                    "'NoneType' object has no attribute 'predict_proba'",
+                [],
+                "'NoneType' object has no attribute 'predict_proba'",
             ),
             (
-                    {},
-                    "'NoneType' object has no attribute 'predict_proba'",
+                {},
+                "'NoneType' object has no attribute 'predict_proba'",
             ),
             (
-                    "1234",
-                    "'str' object has no attribute 'predict_proba'",
+                "1234",
+                "'str' object has no attribute 'predict_proba'",
             ),
         ],
     )
@@ -554,10 +553,7 @@ class TestCollectionLightGbmModel:
     @pytest.mark.parametrize(
         "model, expected_output",
         [
-            (
-                    pytest.model,
-                    0.0
-            ),
+            (pytest.model, 0.0),
         ],
     )
     def test_score(self, model, expected_output):
@@ -570,28 +566,28 @@ class TestCollectionLightGbmModel:
         "model, expected_output",
         [
             (
-                    None,
-                    "'NoneType' object has no attribute 'score'",
+                None,
+                "'NoneType' object has no attribute 'score'",
             ),
             (
-                    "None",
-                    "'str' object has no attribute 'score'",
+                "None",
+                "'str' object has no attribute 'score'",
             ),
             (
-                    "",
-                    "'NoneType' object has no attribute 'score'",
+                "",
+                "'NoneType' object has no attribute 'score'",
             ),
             (
-                    [],
-                    "'NoneType' object has no attribute 'score'",
+                [],
+                "'NoneType' object has no attribute 'score'",
             ),
             (
-                    {},
-                    "'NoneType' object has no attribute 'score'",
+                {},
+                "'NoneType' object has no attribute 'score'",
             ),
             (
-                    "1234",
-                    "'str' object has no attribute 'score'",
+                "1234",
+                "'str' object has no attribute 'score'",
             ),
         ],
     )

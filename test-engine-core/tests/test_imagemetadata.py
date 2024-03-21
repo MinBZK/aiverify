@@ -1,5 +1,4 @@
 import pytest as pytest
-
 from test_engine_core.plugins.enums.image_type import ImageType
 from test_engine_core.plugins.metadata.image_metadata import ImageMetadata
 

@@ -1,7 +1,6 @@
 import logging
 
 import pytest
-
 from test_engine_core.utils.log_utils import log_message
 
 

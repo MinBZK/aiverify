@@ -1,5 +1,4 @@
 import pytest
-
 from test_engine_core.plugins.metadata.plugin_metadata import PluginMetadata
 
 

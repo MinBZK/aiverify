@@ -5,13 +5,12 @@ import sys
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing import get_context
 
-from test_engine_core import version_msg as core_version
-
 from test_engine_app import version_msg as app_version
 from test_engine_app.api.requirements_checks_api import RequirementsChecksApi
 from test_engine_app.app_logger import AppLogger
 from test_engine_app.enums.worker_type import WorkerType
 from test_engine_app.worker import Worker
+from test_engine_core import version_msg as core_version
 
 
 class TestEngineApp:
