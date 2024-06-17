@@ -1,7 +1,0 @@
-.devcontainer
-.github
-.mypy_cache
-deploy-scripts
-examples
-setup-ai-verify
-third-party
