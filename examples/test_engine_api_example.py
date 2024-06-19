@@ -1,7 +1,8 @@
 import json
 import warnings
+import sys
+import os
 from pathlib import Path
-
 from test_engine_api import version_msg as core_version_msg
 from test_engine_core.utils.validate_checks import is_empty_string
 from test_engine_api import version_msg as api_version_msg
@@ -15,6 +16,9 @@ from test_engine_api.api import (
     run_test,
 )
 from test_engine_api.test_argument import TestArgument
+# import the featureEngineeringStage from the right folder
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from test_models.pipelineCustomClass import featureEngineeringStage
 
 
 def update_task_progress(completion_progress: int) -> None:
@@ -166,10 +170,29 @@ def run_example_test() -> None:
     )
     my_fmtc_pipeline_test = ( #adjusted this one for testing purposes
         {
-            "testDataset": "test_datasets/dataset.sav",
-            "modelFile": "test_models/pipeline.sav",
-            "groundTruthDataset": "test_datasets/dataset.sav",
+            "testDataset": "examples/data/sample_mc_pipeline_toxic_data.sav",
+            "modelFile": "examples/pipeline/mc_tabular_toxic",
+            "groundTruthDataset": "examples/data/sample_mc_pipeline_toxic_ytest_data.sav",
             "groundTruth": "toxic",
+            "algorithmId": "algo:aiverify.stock.fairness_metrics_toolbox_for_classification:fairness_metrics_toolbox_for_classification",
+            "algorithmArgs": {
+                "sensitive_feature": ["gender"],
+                "annotated_labels_path": "",
+                "file_name_label": ""
+            },
+            "mode": "upload",
+            "modelType": "classification",
+        },
+        "test-engine-api-example-fmtc-pipeline",
+    )
+
+    # testcase added for testing the fairness_metrics_toolboc_for_classification with own data and model
+    my_fmtc_pipeline_test_ = ( #adjusted this one for testing purposes
+        {
+            "testDataset": "test_datasets/dataset.sav",
+            "modelFile": "test_models",
+            "groundTruthDataset": "test_datasets/dataset_ytest.sav",
+            "groundTruth": "decision",
             "algorithmId": "algo:aiverify.stock.fairness_metrics_toolbox_for_classification:fairness_metrics_toolbox_for_classification",
             "algorithmArgs": {
                 "sensitive_feature": ["gender"],
@@ -281,7 +304,7 @@ def run_example_test() -> None:
 
     # Run principles test (adjusted for test purposes )
     principles_test_cases = [
-        my_fmtr_pipeline_test
+        my_fmtc_pipeline_test_
     ]
     '''
     # Run principles test

@@ -8,11 +8,23 @@ import os
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import Pipeline
+from test_models.pipelineCustomClass import featureEngineeringStage
 
-#read in data (adjust for own path!)
-df = pd.read_csv('/Users/guusjejuijn/Desktop/Projects/aiverify-1/recruitmentdataset-2022-1.3.csv', delimiter = ',')
+# create instance of featureEngineeringStage for transforming and fitting to align with set-up of AIverify
+# define all categorical columns
+columns = ["gender", "nationality", "ind-debateclub", "ind-programming_exp",
+               "ind-international_exp", "ind-entrepeneur_exp",
+                "ind-exact_study", "ind-degree"]
+# define all columns
+selection = ["gender", "nationality", "ind-debateclub", "ind-programming_exp",
+               "ind-international_exp", "ind-entrepeneur_exp",
+                "ind-exact_study", "ind-degree", "age", "ind-university_grade", "ind-languages"]
+featureEngineeringStage = featureEngineeringStage(columns, selection)
 
-#partly used code from thesis: https://github.com/GuusjeJuijn/fairness-perceptions/blob/main/Recruitment%20Prediction%20-%20Model%20Development.ipynb
+#read in data 
+df = pd.read_csv('./recruitmentdataset-2022-1.3.csv', delimiter = ',')
+
+#partly used code from thesis: https://github.com/GuusjeJuijn/fairness-perceptions/blob/main/Recruitment%20Prediction%20-%20Model%20Development.ipyn
 
 #data preprocessing
 data = df[1000:2000] #the dataset contains information about 4 different companies, to make sure our data makes more sense we only select the data from 1 company
@@ -37,6 +49,7 @@ cat_columns = ["gender", "nationality", "ind-debateclub", "ind-programming_exp",
                 "ind-exact_study", "ind-degree"]
 num_columns = ["age", "ind-university_grade", "ind-languages"]
 
+
 X = input_attributes[cat_columns + num_columns]
 
 # split data into train and test set
@@ -48,27 +61,18 @@ x_test.reset_index(drop=True, inplace=True)
 y_train.reset_index(drop=True, inplace=True)
 y_test.reset_index(drop=True, inplace=True)
 
-# one-hot encoding and scaling
-encoder = OneHotEncoder()
-scaler=MinMaxScaler()
-
-preprocessing = ColumnTransformer(
-    [
-        ("categorical", encoder, cat_columns),
-        ("numerical", scaler, num_columns)
-    ],
-    verbose_feature_names_out=False,
-)
-
-
-# Create and fit logistic regression model
+# create a scikit-learn Pipeline object that consists of two stages:
 classifier = Pipeline(
     [
-        ("preprocess", preprocessing),
+        # Stage 1: "preprocess" using featureEngineeringStage
+        ("preprocess", featureEngineeringStage),
+
+        # Stage 2: "classifier" using LogisticRegression
         ("classifier", LogisticRegression(C=10,random_state=42)),
     ]
 )
-classifier.fit(x_train, y_train)
+
+classifier.fit(X = x_train, y = y_train)
 
 # serialize and save the pipeline to the specified path
 folder_path = 'test_models' #define the path to the target folder
@@ -85,4 +89,12 @@ file_path_2 = os.path.join(folder_path_2, 'dataset.sav') # full path to the .sav
 
 with open(file_path_2, 'wb') as file: #save the dataset to a .sav file
     pickle.dump(data, file)
+
+# create y_test data in right format 
+df_y = data['decision'].to_frame().astype(int)
+# serialize and save the dataset to the specified path
+file_path_3 = os.path.join(folder_path_2, 'dataset_ytest.sav') # full path to the .sav file
+
+with open(file_path_3, 'wb') as file: #save the dataset to a .sav file
+    pickle.dump(df_y, file)
 
